@@ -8,37 +8,9 @@
   const nextBanchilsunYear = eventYear + Math.max(0, 70 - age);
   const storageKey = `banchilsun-guestbook-${hostName}`;
   const likeStorageKey = `${storageKey}-likes`;
+  const storageResetKey = `${storageKey}-reset-version`;
+  const STORAGE_RESET_VERSION = "public-guestbook-v1";
   const PAGE_SIZE = 5;
-
-  const seedEntries = [
-    {
-      id: "seed-1",
-      name: "익명의 동창",
-      relationship: "동창",
-      mood: "😂",
-      message: "35살 축하한다. 야식 먹고 바로 자는 건 이제 식사가 아니라 도박이야.",
-      created_at: "2026-06-27T09:10:00.000Z",
-      seed: true,
-    },
-    {
-      id: "seed-2",
-      name: "무릎동지회",
-      relationship: "찐친",
-      mood: "🦴",
-      message: "계단 내려갈 때 나는 소리는 효과음이 아니라 네 무릎이란다. 반칠순 진심으로 축하해.",
-      created_at: "2026-06-27T09:20:00.000Z",
-      seed: true,
-    },
-    {
-      id: "seed-3",
-      name: "엄마 피셜",
-      relationship: "가족",
-      mood: "🥳",
-      message: "아직도 애다. 단, 보험료와 건강검진은 어른이다. 잘 컸다!",
-      created_at: "2026-06-27T09:30:00.000Z",
-      seed: true,
-    },
-  ];
 
   const randomJokes = [
     "35년 동안 큰 사고 없이 여기까지 온 것만으로 이미 대상감입니다.",
@@ -177,9 +149,20 @@
     }
   }
 
+  function resetLegacyLocalData() {
+    try {
+      if (localStorage.getItem(storageResetKey) === STORAGE_RESET_VERSION) return;
+      localStorage.removeItem(storageKey);
+      localStorage.removeItem(likeStorageKey);
+      localStorage.setItem(storageResetKey, STORAGE_RESET_VERSION);
+    } catch (error) {
+      console.warn("기존 로컬 테스트 데이터를 초기화하지 못했습니다.", error);
+    }
+  }
+
   function saveLocalEntries(localEntries) {
     try {
-      localStorage.setItem(storageKey, JSON.stringify(localEntries.filter((entry) => !entry.seed)));
+      localStorage.setItem(storageKey, JSON.stringify(localEntries));
     } catch (error) {
       console.warn("방명록 로컬 데이터를 저장하지 못했습니다.", error);
     }
@@ -240,7 +223,7 @@
     if (hasRemoteStorage) {
       try {
         const remoteEntries = await fetchRemoteEntries();
-        entries = remoteEntries.length ? remoteEntries : seedEntries.slice();
+        entries = remoteEntries;
         renderEntries();
         return;
       } catch (error) {
@@ -248,7 +231,7 @@
       }
     }
 
-    entries = [...readLocalEntries(), ...seedEntries];
+    entries = readLocalEntries();
     entries.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
     renderEntries();
   }
@@ -286,7 +269,7 @@
 
     const relation = document.createElement("span");
     relation.className = "entry-relation";
-    relation.textContent = entry.seed ? `${entry.relationship} · 초기 증언` : entry.relationship;
+    relation.textContent = entry.relationship;
 
     const message = document.createElement("p");
     message.className = "entry-message";
@@ -561,6 +544,7 @@
     sections.forEach((section) => observer.observe(section));
   }
 
+  resetLegacyLocalData();
   configurePage();
   bindEvents();
   setButtonSelection("#relation-options", ".choice-chip", selectedRelation, "relation");

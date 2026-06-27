@@ -5,10 +5,10 @@ window.SITE_CONFIG = {
   EVENT_DATE: "2026.07.03",
   EVENT_PLACE: "경민이의 마음속 VIP석",
   KAKAO_GIFT_URL: "https://gift.kakao.com/home",
-  PHONE_NUMBER: "010 9125 5355",
+  PHONE_NUMBER: "010-9125-5355",
 
   // 공용 방명록을 쓰려면 README의 안내대로 아래 두 값을 채워주세요.
   // Supabase의 anon/publishable key는 브라우저에 공개되는 용도의 키입니다.
-  SUPABASE_URL: "",
-  SUPABASE_ANON_KEY: "",
+  SUPABASE_URL: "https://gihqkrtknvrhlpuwxynx.supabase.co",
+  SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdpaHFrcnRrbnZyaGxwdXd4eW54Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1NTU3OTksImV4cCI6MjA5ODEzMTc5OX0.hxScUlqZaHcSsk-TI0nVdExrXe4IuTz-SrZ2xwCHhck",
 };
