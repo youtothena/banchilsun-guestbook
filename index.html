@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="서른다섯, 인생 첫 반칠순. 경민의 35세 생존을 축하하고 한마디 남겨주세요."
+    />
+    <meta name="theme-color" content="#f34f7f" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="경민의 반칠순 생존기록소" />
+    <meta
+      property="og:description"
+      content="35년 무사 생존. 축하보다 놀림에 가까운 방명록을 남겨주세요."
+    />
+    <title>경민의 반칠순 생존기록소</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gowun+Dodum&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./config.js"></script>
+    <script src="./script.js" defer></script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#guestbook">방명록으로 바로 가기</a>
+
+    <div class="noise" aria-hidden="true"></div>
+    <div class="cursor-spotlight" aria-hidden="true"></div>
+
+    <header class="topbar" aria-label="사이트 메뉴">
+      <a class="mini-logo" href="#top" aria-label="맨 위로">
+        <span>35</span>
+        <small>½ 70</small>
+      </a>
+      <nav>
+        <a href="#case-file">사건 개요</a>
+        <a href="#guestbook">방명록</a>
+        <a href="#manual">사용설명서</a>
+      </nav>
+      <button class="icon-button" id="share-button" type="button" aria-label="이 페이지 공유하기">
+        공유 ↗
+      </button>
+    </header>
+
+    <main id="top">
+      <section class="hero section-pad" aria-labelledby="hero-title">
+        <div class="news-ticker" aria-label="속보">
+          <span class="ticker-label">속보</span>
+          <div class="ticker-window">
+            <p>
+              <span data-host>경민</span> 씨, 35년째 무사 생존 · 청춘 연장 심사 중 · 무릎 측 “공식 입장 없다”
+              · 케이크 초 개수 문제로 소방 당국 긴장
+            </p>
+          </div>
+        </div>
+
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <div class="eyebrow-row">
+              <span class="eyebrow">1992—2026 · 살아 있는 전설</span>
+            </div>
+
+            <h1 id="hero-title">
+              <span class="host-line"><span data-host>경민</span>의</span>
+              <span class="title-line title-line-pink">반</span>
+              <span class="title-line title-line-yellow">칠순</span>
+            </h1>
+
+            <div class="hero-caption">
+              <p>
+                칠순은 멀었는데 잔치는 못 참지.<br />
+                서른다섯, 체력은 반납하고 흥만 재계약했습니다.
+              </p>
+              <div class="stamp stamp-verified" aria-label="35년 생존 인증">
+                35년<br />생존인증
+              </div>
+            </div>
+
+            <div class="hero-actions">
+              <a class="button button-dark" href="#guestbook">한마디 보태기 <span>↓</span></a>
+              <button class="button button-paper" id="confetti-button" type="button">
+                축포 수동 발사 ✦
+              </button>
+            </div>
+
+            <dl class="event-ticket" aria-label="파티 안내">
+              <div>
+                <dt>WHEN</dt>
+                <dd data-event-date>2026.07.03</dd>
+              </div>
+              <div>
+                <dt>WHERE</dt>
+                <dd data-event-place>경민이의 마음속 VIP석</dd>
+              </div>
+            </dl>
+          </div>
+
+        </div>
+
+        <div class="scroll-cue" aria-hidden="true">
+          <span>다음 장: 1992 사진첩</span>
+          <i></i>
+        </div>
+      </section>
+
+      <section class="hero-photo section-pad" id="photo" aria-labelledby="photo-title">
+        <div class="photo-section-grid">
+          <div class="photo-section-copy">
+            <p class="photo-kicker">ARCHIVE NO. 1992</p>
+            <h2 id="photo-title">이때부터<br />주인공 체질</h2>
+            <p>
+              생일상 앞에서도 흔들리지 않는 눈빛.<br />
+              서른다섯의 흥은 하루아침에<br />
+              생긴 게 아닙니다.
+            </p>
+            <span class="photo-source">사진 제공: 가족 앨범 · 표정 제공: 본인</span>
+          </div>
+
+          <div class="hero-art" aria-label="35세 반칠순 기념사진">
+            <div class="burst" aria-hidden="true"></div>
+            <div class="photo-card photo-card-main">
+              <span class="tape tape-top" aria-hidden="true"></span>
+              <div class="portrait-stage">
+                <img
+                  class="portrait-photo"
+                  src="./assets/kyungmin-childhood.webp"
+                  alt="어린 시절 한복을 입고 생일상을 바라보는 경민"
+                />
+                <span class="photo-year">1992 ARCHIVE</span>
+              </div>
+              <p>오늘만큼은 주인공<br /><small>(내일부터 다시 일반인)</small></p>
+            </div>
+            <span class="sticker sticker-hot">HOT<br />DEBUT</span>
+            <span class="sticker sticker-age">만 나이<br />계산 금지</span>
+            <span class="arrow-note">이분이 그분 ↗</span>
+          </div>
+        </div>
+
+        <div class="scroll-cue photo-scroll-cue" aria-hidden="true">
+          <span>다음 장: 사건 개요</span>
+          <i></i>
+        </div>
+      </section>
+
+      <section class="case-file section-pad" id="case-file" aria-labelledby="case-title">
+        <div class="section-heading">
+          <p class="kicker">CASE NO. 1992-35</p>
+          <h2 id="case-title">사건 개요</h2>
+          <p>본 자료는 본인의 과장된 증언을 토대로 작성되었습니다.</p>
+        </div>
+
+        <div class="stat-grid">
+          <article class="stat-card stat-card-pink">
+            <span class="stat-index">01</span>
+            <p>현재 나이</p>
+            <strong><span data-age>35</span><small>세</small></strong>
+            <em>마음은 대학교 2학년</em>
+          </article>
+          <article class="stat-card stat-card-yellow">
+            <span class="stat-index">02</span>
+            <p>남은 청춘</p>
+            <strong class="stat-word">무제한*</strong>
+            <em>*본인 주장. 근거 없음.</em>
+          </article>
+          <article class="stat-card stat-card-blue">
+            <span class="stat-index">03</span>
+            <p>회복 속도</p>
+            <strong class="stat-word">2—3일</strong>
+            <em>술자리 1회 기준</em>
+          </article>
+          <article class="stat-card stat-card-mint">
+            <span class="stat-index">04</span>
+            <p>무릎 상태</p>
+            <strong class="stat-word">예의주시</strong>
+            <em>계단 하강 시 소리 남</em>
+          </article>
+        </div>
+
+        <div class="evidence-strip">
+          <span>현장 증거 A</span>
+          <p>“어제 늦게 잤더니 오늘 하루가 사라졌어요.”</p>
+          <b>— 피고인 본인 진술</b>
+        </div>
+      </section>
+
+      <section class="guestbook section-pad" id="guestbook" aria-labelledby="guestbook-title">
+        <div class="guestbook-intro">
+          <div class="section-heading section-heading-light">
+            <p class="kicker">GUEST TESTIMONY</p>
+            <h2 id="guestbook-title">축하는 짧게<br />놀림은 길게<br />증거는 남게.</h2>
+            <p>
+              마음만 전하기엔 손가락이 너무 멀쩡합니다.<br />
+              140자 안에 <span data-host>경민</span>을 웃기거나 살짝 울려 주세요.
+            </p>
+          </div>
+
+          <div class="warning-label">
+            <span>!</span>
+            <p>지나친 미담은<br />사실관계 확인에 들어갑니다.</p>
+          </div>
+        </div>
+
+        <div class="guestbook-layout">
+          <form class="guest-form" id="guest-form" novalidate>
+            <div class="form-ribbon">공식 기록으로 남기기</div>
+
+            <fieldset class="relation-picker">
+              <legend>당신은 누구십니까?</legend>
+              <div class="chip-grid" id="relation-options">
+                <button class="choice-chip is-selected" type="button" data-relation="찐친">찐친 · 흑역사 보유</button>
+                <button class="choice-chip" type="button" data-relation="동창">동창 · 같이 늙는 중</button>
+                <button class="choice-chip" type="button" data-relation="가족">가족 · 환불 불가</button>
+                <button class="choice-chip" type="button" data-relation="직장">직장 · 사회적 지인</button>
+                <button class="choice-chip" type="button" data-relation="후배">후배 · 아직 모름</button>
+                <button class="choice-chip" type="button" data-relation="동기">동기 · 아직은 무서운 언니</button>
+              </div>
+            </fieldset>
+
+            <div class="input-row">
+              <label>
+                <span>이름 / 별명</span>
+                <input
+                  id="guest-name"
+                  name="name"
+                  type="text"
+                  maxlength="12"
+                  autocomplete="name"
+                  placeholder="예: 무릎동지회장"
+                  required
+                />
+              </label>
+            </div>
+
+            <label class="message-label" for="guest-message">
+              <span>한마디</span>
+              <textarea
+                id="guest-message"
+                name="message"
+                rows="5"
+                maxlength="140"
+                placeholder="칭찬 20%, 놀림 80%의 황금비율을 권장합니다."
+                required
+              ></textarea>
+              <small><b id="char-count">0</b>/140</small>
+            </label>
+
+            <div class="form-actions">
+              <button class="button button-paper button-random" id="random-joke" type="button">
+                주접 드립 뽑기 ↻
+              </button>
+              <button class="button button-yellow button-submit" type="submit">
+                영구 박제하기 <span>→</span>
+              </button>
+            </div>
+
+          </form>
+
+        </div>
+      </section>
+
+      <section class="testimonials section-pad" id="testimonials" aria-label="증언 리스트">
+        <div class="entry-panel">
+          <div class="entry-toolbar">
+            <div>
+              <p>현재까지</p>
+              <strong><span id="entry-count">3</span>명의 증언</strong>
+            </div>
+            <div class="filter-row" id="entry-filters" aria-label="방명록 필터">
+              <button class="filter-button is-active" type="button" data-filter="all">전체</button>
+              <button class="filter-button" type="button" data-filter="찐친">찐친</button>
+              <button class="filter-button" type="button" data-filter="가족">가족</button>
+            </div>
+          </div>
+
+          <div class="entry-list" id="entry-list" aria-live="polite"></div>
+
+          <div class="empty-state" id="empty-state" hidden>
+            <span>텅—</span>
+            <p>아직 증언이 없습니다.<br />첫 폭로자가 되어주세요.</p>
+          </div>
+
+          <nav class="entry-pagination" id="entry-pagination" aria-label="증언 페이지">
+            <button id="page-prev" type="button">← 이전 5개</button>
+            <span><b id="page-current">1</b> / <b id="page-total">1</b></span>
+            <button id="page-next" type="button">다음 5개 →</button>
+          </nav>
+        </div>
+      </section>
+
+      <section class="manual section-pad" id="manual" aria-labelledby="manual-title">
+        <div class="section-heading">
+          <p class="kicker">USER MANUAL · VER 35.0</p>
+          <h2 id="manual-title">35세 사용설명서</h2>
+          <p>잘못 다루면 “나 때는 말이야” 모드가 자동 실행됩니다.</p>
+        </div>
+
+        <div class="manual-grid">
+          <article class="manual-card manual-card-one">
+            <span class="manual-icon">☀</span>
+            <p class="manual-number">01 / 기상</p>
+            <h3>알람보다<br />관절이 먼저 깸</h3>
+            <p>갑자기 일으키지 말고 커피를 가까이 둡니다.</p>
+          </article>
+          <article class="manual-card manual-card-two">
+            <span class="manual-icon">♨</span>
+            <p class="manual-number">02 / 충전</p>
+            <h3>주말 하루는<br />누워 있어야 함</h3>
+            <p>외출 두 건을 연속으로 잡으면 월요일에 오류가 납니다.</p>
+          </article>
+          <article class="manual-card manual-card-three">
+            <span class="manual-icon">♪</span>
+            <p class="manual-number">03 / 재생</p>
+            <h3>2000년대 노래에<br />성능이 향상됨</h3>
+            <p>첫 소절만 들려줘도 가사 전체를 자동 복원합니다.</p>
+          </article>
+        </div>
+
+        <div class="fortune-machine">
+          <div class="fortune-copy">
+            <span class="fortune-label">무료 · 부작용 없음</span>
+            <h3>나의 반칠순력 측정</h3>
+            <p>버튼을 눌러 오늘의 35세 생존 처방을 확인하세요.</p>
+          </div>
+          <div class="fortune-result" id="fortune-result" aria-live="polite">
+            <span>READY</span>
+            <p>검사 대기 중</p>
+          </div>
+          <button class="fortune-button" id="fortune-button" type="button">
+            <span>눌러서 측정</span>
+            <i aria-hidden="true"></i>
+          </button>
+        </div>
+      </section>
+
+      <section class="finale section-pad" id="finale" aria-labelledby="finale-title">
+        <div class="finale-stars" aria-hidden="true">✦　★　✦　★　✦</div>
+        <p>오늘의 결론</p>
+        <h2 id="finale-title">
+          어쨌든<br />잘 컸다 <span data-host>경민</span>아!
+        </h2>
+        <div class="finale-subcopy">
+          <p>내년에 또 만나요. 70세에도 만나요.</p>
+          <span>생존 신고는 매년, 대형 잔치는 <b data-next-year>2061</b>년에.</span>
+        </div>
+        <div class="finale-actions">
+          <a class="button button-yellow contact-button" id="kakao-gift-button" href="#">카카오톡 선물하기 🎁</a>
+          <a class="button button-paper contact-button" id="phone-button" href="#">직접 연결하기 (전화) ☎</a>
+        </div>
+        <p class="tiny-credit">MADE WITH 케이크, 의리, 약간의 허위사실</p>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite">
+      <span>✓</span>
+      <p>증언이 안전하게 박제되었습니다.</p>
+    </div>
+
+    <div class="confetti-layer" id="confetti-layer" aria-hidden="true"></div>
+  </body>
+</html>
