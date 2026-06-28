@@ -2795,6 +2795,18 @@ body:hover .cursor-spotlight {
     padding-bottom: calc(32px + env(safe-area-inset-bottom, 0px));
   }
 
+  .title-line-pink {
+    color: var(--pink);
+    -webkit-text-fill-color: var(--pink);
+  }
+
+  .title-line-yellow,
+  .hero-photo .photo-section-copy h2,
+  .finale h2 {
+    color: var(--yellow);
+    -webkit-text-fill-color: var(--yellow);
+  }
+
   .hero-photo {
     align-items: stretch;
     padding-top: calc(78px + env(safe-area-inset-top, 0px));
