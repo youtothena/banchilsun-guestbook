@@ -86,6 +86,21 @@
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
+  const canVibrate =
+    typeof navigator !== "undefined" && typeof navigator.vibrate === "function";
+
+  // Light haptic feedback for touch devices. No-op where unsupported or when
+  // the user prefers reduced motion.
+  function buzz(pattern = 12) {
+    if (!canVibrate) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    try {
+      navigator.vibrate(pattern);
+    } catch (error) {
+      /* vibration is best-effort */
+    }
+  }
+
   let entries = [];
   let selectedRelation = "찐친";
   let activeFilter = "all";
@@ -127,6 +142,29 @@
     );
   }
 
+  function keepFieldVisible(field) {
+    // Scroll the focused field into the area that stays visible above the
+    // on-screen keyboard. visualViewport reflects the keyboard-reduced area,
+    // so we nudge the page only by what's needed to clear it.
+    const viewport = window.visualViewport;
+    const visibleHeight = viewport ? viewport.height : window.innerHeight;
+    const visibleTop = viewport ? viewport.offsetTop : 0;
+    const rect = field.getBoundingClientRect();
+    const margin = 24;
+    const topbarGap = 16;
+
+    let delta = 0;
+    if (rect.bottom > visibleTop + visibleHeight - margin) {
+      delta = rect.bottom - (visibleTop + visibleHeight - margin);
+    } else if (rect.top < visibleTop + topbarGap) {
+      delta = rect.top - (visibleTop + topbarGap);
+    }
+
+    if (Math.abs(delta) > 1) {
+      window.scrollBy({ top: delta, behavior: "smooth" });
+    }
+  }
+
   function syncFormFocusState() {
     const focusedElement = document.activeElement;
     const isFormField = Boolean(
@@ -141,8 +179,8 @@
     if (isFormField) {
       window.clearTimeout(focusScrollTimer);
       focusScrollTimer = window.setTimeout(() => {
-        focusedElement.scrollIntoView({ block: "center", behavior: "smooth" });
-      }, 180);
+        keepFieldVisible(focusedElement);
+      }, 200);
     } else {
       window.clearTimeout(focusScrollTimer);
     }
@@ -459,6 +497,7 @@
       setButtonSelection("#relation-options", ".choice-chip", selectedRelation, "relation");
       charCount.textContent = "0";
       showToast("증언이 안전하게 박제되었습니다.");
+      buzz([15, 40, 15, 40, 30]);
       fireConfetti(76);
     } catch (error) {
       console.error(error);
@@ -496,6 +535,7 @@
       if (!button) return;
       selectedRelation = button.dataset.relation;
       setButtonSelection("#relation-options", ".choice-chip", selectedRelation, "relation");
+      buzz(10);
     });
 
     messageInput.addEventListener("input", () => {
@@ -547,6 +587,7 @@
     pagePrev.addEventListener("click", () => {
       if (currentPage <= 1) return;
       currentPage -= 1;
+      buzz(8);
       renderEntries();
     });
 
@@ -557,16 +598,54 @@
       const totalPages = Math.max(1, Math.ceil(visibleCount / PAGE_SIZE));
       if (currentPage >= totalPages) return;
       currentPage += 1;
+      buzz(8);
       renderEntries();
     });
+
+    // Swipe left/right across the testimonial list to page through entries.
+    let swipeStartX = 0;
+    let swipeStartY = 0;
+    let swipeTracking = false;
+
+    entryList.addEventListener(
+      "touchstart",
+      (event) => {
+        if (event.touches.length !== 1) {
+          swipeTracking = false;
+          return;
+        }
+        swipeStartX = event.touches[0].clientX;
+        swipeStartY = event.touches[0].clientY;
+        swipeTracking = true;
+      },
+      { passive: true }
+    );
+
+    entryList.addEventListener(
+      "touchend",
+      (event) => {
+        if (!swipeTracking) return;
+        swipeTracking = false;
+        const touch = event.changedTouches[0];
+        const deltaX = touch.clientX - swipeStartX;
+        const deltaY = touch.clientY - swipeStartY;
+        // Horizontal intent only, with a comfortable threshold.
+        if (Math.abs(deltaX) < 55 || Math.abs(deltaX) < Math.abs(deltaY) * 1.4) return;
+        if (deltaX < 0) pageNext.click();
+        else pagePrev.click();
+      },
+      { passive: true }
+    );
 
     entryList.addEventListener("click", (event) => {
       const button = event.target.closest(".entry-like");
       if (!button) return;
       const likes = readLikes();
-      if (likes.has(button.dataset.id)) likes.delete(button.dataset.id);
-      else likes.add(button.dataset.id);
+      const willLike = !likes.has(button.dataset.id);
+      if (willLike) likes.add(button.dataset.id);
+      else likes.delete(button.dataset.id);
       saveLikes(likes);
+      buzz(willLike ? [10, 30, 10] : 8);
       renderEntries();
     });
 
@@ -574,9 +653,13 @@
       const [score, copy] = fortunes[Math.floor(Math.random() * fortunes.length)];
       $("span", $("#fortune-result")).textContent = score;
       $("p", $("#fortune-result")).textContent = copy;
+      buzz([12, 40, 12]);
     });
 
-    $("#confetti-button").addEventListener("click", () => fireConfetti(90));
+    $("#confetti-button").addEventListener("click", () => {
+      buzz([12, 30, 12]);
+      fireConfetti(90);
+    });
     $("#share-button").addEventListener("click", sharePage);
 
     $$(".contact-button[data-unconfigured]").forEach((button) => {

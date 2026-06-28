@@ -2371,7 +2371,7 @@ body:hover .cursor-spotlight {
 }
 
 .guestbook .guest-form {
-  position: static;
+  position: relative;
   width: 100%;
   max-width: 700px;
 }
@@ -2997,9 +2997,103 @@ body:hover .cursor-spotlight {
     transform: translate(-50%, -140%);
   }
 
+  /* When the on-screen keyboard is up, stop forcing the section to a full
+     viewport height (which would otherwise push the submit button under the
+     keyboard) and add room to scroll the focused field fully into view. */
   html.is-form-focused .guestbook {
+    height: auto;
+    min-height: 0;
     overflow: visible;
     scroll-snap-align: none;
+    padding-bottom: calc(40vh + env(safe-area-inset-bottom, 0px));
+  }
+
+  html.is-form-focused .guestbook-intro {
+    display: none;
+  }
+
+  html.is-form-focused .guestbook .guest-form {
+    margin-top: 8px;
+  }
+}
+
+/* Tablet range (681–980px): collapse guestbook to a single column so the
+   form and intro are not cramped, and let taller sections scroll instead of
+   clipping. */
+@media (min-width: 681px) and (max-width: 980px) {
+  .guestbook {
+    grid-template-columns: 1fr;
+    align-content: center;
+    gap: 22px;
+  }
+
+  .guestbook .section-heading h2 {
+    white-space: normal;
+  }
+
+  .guestbook .guest-form {
+    margin: 8px auto 0;
+  }
+
+  .case-file,
+  .guestbook,
+  .testimonials,
+  .manual {
+    height: auto;
+    min-height: 100svh;
+    overflow: visible;
+  }
+}
+
+/* Short viewports (landscape phones, small laptops, split-screen): a fixed
+   100svh with hidden overflow would cut content off. Let every section grow to
+   its content and switch snapping to proximity so nothing is unreachable. */
+@media (max-height: 620px) and (min-width: 681px) {
+  html {
+    scroll-snap-type: y proximity;
+  }
+
+  .hero,
+  .hero-photo,
+  .case-file,
+  .guestbook,
+  .testimonials,
+  .manual,
+  .finale,
+  .section-pad {
+    height: auto;
+    min-height: 100svh;
+    overflow: visible;
+  }
+}
+
+/* Very short / landscape phones: keep the snap off and tighten vertical
+   rhythm so cards stay legible without clipping. */
+@media (max-height: 480px) and (max-width: 980px) {
+  html {
+    scroll-snap-type: none;
+  }
+
+  .section-pad {
+    min-height: 0;
+    padding-top: 84px;
+    padding-bottom: 28px;
+  }
+
+  .hero,
+  .hero-photo,
+  .case-file,
+  .guestbook,
+  .testimonials,
+  .manual,
+  .finale {
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .hero {
+    padding-top: 92px;
   }
 }
 
