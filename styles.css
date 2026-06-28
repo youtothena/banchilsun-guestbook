@@ -2807,6 +2807,23 @@ body:hover .cursor-spotlight {
     -webkit-text-fill-color: var(--yellow);
   }
 
+  .title-line,
+  .hero-photo .photo-section-copy h2,
+  .finale h2 {
+    -webkit-text-stroke: 0 transparent;
+    paint-order: normal;
+    text-shadow:
+      -2px -2px 0 var(--ink),
+      0 -2px 0 var(--ink),
+      2px -2px 0 var(--ink),
+      -2px 0 0 var(--ink),
+      2px 0 0 var(--ink),
+      -2px 2px 0 var(--ink),
+      0 2px 0 var(--ink),
+      2px 2px 0 var(--ink),
+      6px 6px 0 var(--ink);
+  }
+
   .hero-photo {
     align-items: stretch;
     padding-top: calc(78px + env(safe-area-inset-top, 0px));
