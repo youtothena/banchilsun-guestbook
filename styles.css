@@ -2852,7 +2852,7 @@ body:hover .cursor-spotlight {
 
   .section-pad {
     height: auto;
-    min-height: 100svh;
+    min-height: var(--mobile-viewport-height, 100svh);
     padding-top: calc(76px + env(safe-area-inset-top, 0px));
     padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
     scroll-snap-align: start;
@@ -2867,7 +2867,7 @@ body:hover .cursor-spotlight {
   .manual,
   .finale {
     height: auto;
-    min-height: 100svh;
+    min-height: var(--mobile-viewport-height, 100svh);
     overflow: clip;
   }
 
@@ -2932,6 +2932,20 @@ body:hover .cursor-spotlight {
     padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
   }
 
+  .guestbook .guest-form {
+    margin-top: 14px;
+    overflow: visible;
+  }
+
+  .guestbook .form-ribbon {
+    top: -12px;
+    left: 12px;
+    z-index: 2;
+    max-width: calc(100% - 24px);
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
   .guestbook .guest-form input,
   .guestbook .guest-form textarea {
     font-size: 16px;
@@ -2971,6 +2985,21 @@ body:hover .cursor-spotlight {
 
   .finale .tiny-credit {
     margin-top: 38px;
+  }
+
+  html.is-form-focused {
+    scroll-snap-type: none;
+  }
+
+  html.is-form-focused .topbar {
+    pointer-events: none;
+    opacity: 0;
+    transform: translate(-50%, -140%);
+  }
+
+  html.is-form-focused .guestbook {
+    overflow: visible;
+    scroll-snap-align: none;
   }
 }
 

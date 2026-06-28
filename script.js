@@ -91,6 +91,7 @@
   let activeFilter = "all";
   let currentPage = 1;
   let toastTimer = null;
+  let focusScrollTimer = null;
 
   const hasRemoteStorage = Boolean(
     config.SUPABASE_URL &&
@@ -111,6 +112,41 @@
   const pagePrev = $("#page-prev");
   const pageNext = $("#page-next");
   const toast = $("#toast");
+  const mobileViewport = window.matchMedia("(max-width: 680px)");
+
+  function setStableMobileViewportHeight() {
+    if (!mobileViewport.matches) {
+      document.documentElement.style.removeProperty("--mobile-viewport-height");
+      return;
+    }
+
+    const viewportHeight = window.visualViewport?.height || window.innerHeight;
+    document.documentElement.style.setProperty(
+      "--mobile-viewport-height",
+      `${Math.round(viewportHeight)}px`
+    );
+  }
+
+  function syncFormFocusState() {
+    const focusedElement = document.activeElement;
+    const isFormField = Boolean(
+      mobileViewport.matches &&
+        focusedElement &&
+        guestForm.contains(focusedElement) &&
+        focusedElement.matches("input, textarea")
+    );
+
+    document.documentElement.classList.toggle("is-form-focused", isFormField);
+
+    if (isFormField) {
+      window.clearTimeout(focusScrollTimer);
+      focusScrollTimer = window.setTimeout(() => {
+        focusedElement.scrollIntoView({ block: "center", behavior: "smooth" });
+      }, 180);
+    } else {
+      window.clearTimeout(focusScrollTimer);
+    }
+  }
 
   function configurePage() {
     $$('[data-host]').forEach((element) => {
@@ -473,9 +509,27 @@
       const candidates = randomJokes.filter((joke) => joke !== messageInput.value);
       messageInput.value = candidates[Math.floor(Math.random() * candidates.length)];
       charCount.textContent = String(messageInput.value.length);
-      messageInput.focus();
+      if (!mobileViewport.matches) messageInput.focus();
       messageInput.removeAttribute("aria-invalid");
     });
+
+    guestForm.addEventListener("focusin", syncFormFocusState);
+    guestForm.addEventListener("focusout", () => {
+      window.setTimeout(syncFormFocusState, 80);
+    });
+
+    window.addEventListener("pageshow", setStableMobileViewportHeight);
+    window.addEventListener("orientationchange", () => {
+      window.setTimeout(setStableMobileViewportHeight, 320);
+    });
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", () => {
+        if (document.documentElement.classList.contains("is-form-focused")) {
+          syncFormFocusState();
+        }
+      });
+    }
 
     guestForm.addEventListener("submit", handleSubmit);
 
@@ -565,6 +619,7 @@
   }
 
   resetLegacyLocalData();
+  setStableMobileViewportHeight();
   configurePage();
   bindEvents();
   setButtonSelection("#relation-options", ".choice-chip", selectedRelation, "relation");
