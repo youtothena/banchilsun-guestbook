@@ -678,10 +678,55 @@
     }
   }
 
+  function observeNavigationSections() {
+    if (!("IntersectionObserver" in window)) return;
+
+    const links = $$(".topbar nav a");
+    const sectionById = new Map(
+      links
+        .map((link) => {
+          const id = link.getAttribute("href")?.slice(1);
+          const section = id ? document.getElementById(id) : null;
+          return section ? [id, section] : null;
+        })
+        .filter(Boolean)
+    );
+    const visibility = new Map();
+
+    const setCurrent = (id) => {
+      links.forEach((link) => {
+        if (link.getAttribute("href") === `#${id}`) {
+          link.setAttribute("aria-current", "true");
+        } else {
+          link.removeAttribute("aria-current");
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          visibility.set(entry.target.id, entry.isIntersecting ? entry.intersectionRatio : 0);
+        });
+
+        const current = Array.from(visibility.entries()).sort((a, b) => b[1] - a[1])[0];
+        if (current && current[1] > 0) {
+          setCurrent(current[0]);
+        } else {
+          links.forEach((link) => link.removeAttribute("aria-current"));
+        }
+      },
+      { rootMargin: "-35% 0px -55% 0px", threshold: [0, 0.01, 0.1] }
+    );
+
+    sectionById.forEach((section) => observer.observe(section));
+  }
+
   resetLegacyLocalData();
   setStableMobileViewportHeight();
   configurePage();
   bindEvents();
   setButtonSelection("#relation-options", ".choice-chip", selectedRelation, "relation");
+  observeNavigationSections();
   loadEntries();
 })();

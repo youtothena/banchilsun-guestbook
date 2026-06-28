@@ -2849,7 +2849,8 @@ body:hover .cursor-spotlight {
 
   .guestbook {
     padding-top: calc(82px + env(safe-area-inset-top, 0px));
-    padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(32px + env(safe-area-inset-bottom, 0px));
+    overflow: visible;
   }
 
   .guestbook .guest-form {
@@ -2921,10 +2922,6 @@ body:hover .cursor-spotlight {
     min-height: 0;
     overflow: visible;
     padding-bottom: calc(40vh + env(safe-area-inset-bottom, 0px));
-  }
-
-  html.is-form-focused .guestbook-intro {
-    display: none;
   }
 
   html.is-form-focused .guestbook .guest-form {
