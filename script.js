@@ -211,12 +211,14 @@
     const kakaoButton = $("#kakao-gift-button");
     const phoneButton = $("#phone-button");
 
-    if (config.KAKAO_GIFT_URL) {
-      kakaoButton.href = config.KAKAO_GIFT_URL;
-      kakaoButton.target = "_blank";
-      kakaoButton.rel = "noopener noreferrer";
-    } else {
-      kakaoButton.dataset.unconfigured = "카카오톡 선물 링크";
+    if (kakaoButton) {
+      if (config.KAKAO_GIFT_URL) {
+        kakaoButton.href = config.KAKAO_GIFT_URL;
+        kakaoButton.target = "_blank";
+        kakaoButton.rel = "noopener noreferrer";
+      } else {
+        kakaoButton.dataset.unconfigured = "카카오톡 선물 링크";
+      }
     }
 
     if (config.PHONE_NUMBER) {
