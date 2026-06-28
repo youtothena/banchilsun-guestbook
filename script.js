@@ -161,7 +161,7 @@
     }
 
     if (Math.abs(delta) > 1) {
-      window.scrollBy({ top: delta, behavior: "smooth" });
+      window.scrollBy({ top: delta, behavior: "auto" });
     }
   }
 
@@ -678,34 +678,10 @@
     }
   }
 
-  function observeSections() {
-    const sections = $$("main > section");
-    const navLinks = $$(".topbar nav a");
-    if (!("IntersectionObserver" in window)) return;
-
-    const observer = new IntersectionObserver(
-      (observations) => {
-        observations.forEach((observation) => {
-          if (!observation.isIntersecting) return;
-          sections.forEach((section) => section.classList.toggle("is-current", section === observation.target));
-          navLinks.forEach((link) => {
-            const isCurrent = link.getAttribute("href") === `#${observation.target.id}`;
-            if (isCurrent) link.setAttribute("aria-current", "true");
-            else link.removeAttribute("aria-current");
-          });
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    sections.forEach((section) => observer.observe(section));
-  }
-
   resetLegacyLocalData();
   setStableMobileViewportHeight();
   configurePage();
   bindEvents();
   setButtonSelection("#relation-options", ".choice-chip", selectedRelation, "relation");
-  observeSections();
   loadEntries();
 })();
